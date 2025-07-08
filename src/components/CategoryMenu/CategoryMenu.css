@@ -1,0 +1,17 @@
+.category-menu {
+  padding: 10px 20px;
+}
+
+.category-menu button {
+  margin: 0 8px 8px 0;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.category-menu button.active {
+  background-color: #0077cc;
+  color: white;
+}

@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: #f5f5f5;
+  font-family: 'Tahoma', sans-serif;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.admin-btn {
+  padding: 6px 12px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}

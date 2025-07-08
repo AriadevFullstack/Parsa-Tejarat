@@ -1,0 +1,61 @@
+.admin-panel {
+  padding: 20px;
+  font-family: 'Tahoma';
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  max-width: 400px;
+  gap: 10px;
+}
+
+.add-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.add-form button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.admin-product-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.admin-product-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  position: relative;
+}
+
+.admin-product-card button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-product-card img,
+.product-card img {
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 200px;
+}
+
