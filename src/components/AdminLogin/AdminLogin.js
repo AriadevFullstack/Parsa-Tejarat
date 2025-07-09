@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import './AdminLogin.css';
+import React, { useState } from "react";
+import "./AdminLogin.css";
+const API = process.env.REACT_APP_API_URL;
 
 function AdminLogin({ onLogin }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch(`${API}/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
@@ -20,10 +21,10 @@ function AdminLogin({ onLogin }) {
       if (res.ok) {
         onLogin(data.token); // ارسال توکن به بالا
       } else {
-        setError(data.message || 'ورود ناموفق');
+        setError(data.message || "ورود ناموفق");
       }
     } catch (err) {
-      setError('خطا در ارتباط با سرور');
+      setError("خطا در ارتباط با سرور");
     }
   };
 
