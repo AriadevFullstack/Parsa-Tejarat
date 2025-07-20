@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-const API = process.env.REACT_APP_API;
-
+import React, { useEffect, useState } from "react";
+const API = process.env.REACT_APP_API || "https://parsa-trade-server.onrender.com";
 
 function AddProductForm({ onAdd, onUpdate, editingProduct }) {
   const [form, setForm] = useState({
-    name: '',
-    description: '',
-    price: '',
-    category: '',
-    image: '',
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
   });
   const [file, setFile] = useState(null);
 
@@ -33,10 +32,10 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
     // اگر فایل جدید انتخاب شده
     if (file) {
       const data = new FormData();
-      data.append('image', file);
+      data.append("image", file);
 
-      const res = await fetch('http://localhost:5000/upload', {
-        method: 'POST',
+      const res = await fetch(`${API}/upload`, {
+        method: "POST",
         body: data,
       });
       const imgRes = await res.json();
@@ -51,19 +50,49 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
 
     editingProduct ? onUpdate(productData) : onAdd(productData);
 
-    setForm({ name: '', description: '', price: '', category: '', image: '' });
+    setForm({ name: "", description: "", price: "", category: "", image: "" });
     setFile(null);
   };
 
   return (
     <form onSubmit={handleSubmit} className="add-form">
-      <h3>{editingProduct ? 'ویرایش محصول' : 'افزودن محصول جدید'}</h3>
-      <input name="name" type="text" placeholder="نام" value={form.name} onChange={handleChange} required />
-      <input name="description" type="text" placeholder="توضیحات" value={form.description} onChange={handleChange} required />
-      <input name="price" type="number" placeholder="قیمت" value={form.price} onChange={handleChange} required />
-      <input name="category" type="text" placeholder="دسته‌بندی" value={form.category} onChange={handleChange} required />
+      <h3>{editingProduct ? "ویرایش محصول" : "افزودن محصول جدید"}</h3>
+      <input
+        name="name"
+        type="text"
+        placeholder="نام"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="description"
+        type="text"
+        placeholder="توضیحات"
+        value={form.description}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="price"
+        type="number"
+        placeholder="قیمت"
+        value={form.price}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="category"
+        type="text"
+        placeholder="دسته‌بندی"
+        value={form.category}
+        onChange={handleChange}
+        required
+      />
       <input type="file" onChange={handleFileChange} />
-      <button type="submit">{editingProduct ? 'ذخیره تغییرات' : 'افزودن'}</button>
+      <button type="submit">
+        {editingProduct ? "ذخیره تغییرات" : "افزودن"}
+      </button>
     </form>
   );
 }

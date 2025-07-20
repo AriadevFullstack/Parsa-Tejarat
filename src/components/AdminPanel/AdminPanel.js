@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 import AdminProductList from './AdminProductList';
 import AddProductForm from './AddProductForm';
 import './AdminPanel.css';
-const API = process.env.REACT_APP_API;
+const API = process.env.REACT_APP_API || "https://parsa-trade-server.onrender.com";
+
 
 
 function AdminPanel({ token }) {
   const [products, setProducts] = useState([]);
-  const [editingProduct, setEditingProduct] = useState(null); // ← برای ویرایش
+  const [editingProduct, setEditingProduct] = useState(null);
 
   const fetchProducts = async () => {
-    const res = await fetch('http://localhost:5000/products');
-    const data = await res.json();
-    setProducts(data);
+    try {
+      const res = await fetch(`${API}/products`);
+      const data = await res.json();
+      setProducts(data);
+    } catch (err) {
+      console.error('خطا در دریافت محصولات:', err);
+    }
   };
 
   useEffect(() => {
@@ -20,15 +25,15 @@ function AdminPanel({ token }) {
   }, []);
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/products/${id}`, {
+    await fetch(`${API}/products/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchProducts();
   };
 
-  const handleAdd = async (productData) => {
-    await fetch('http://localhost:5000/products', {
+ const handleAdd = async (productData) => {
+    await fetch(`${API}/products`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +45,7 @@ function AdminPanel({ token }) {
   };
 
   const handleUpdate = async (productData) => {
-    await fetch(`http://localhost:5000/products/${productData.id}`, {
+    await fetch(`${API}/products/${productData.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

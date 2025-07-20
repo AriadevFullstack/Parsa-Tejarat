@@ -1,30 +1,33 @@
-import React, { useState } from "react";
-import "./AdminLogin.css";
-const API = process.env.REACT_APP_API_URL;
+import React, { useState } from 'react';
+import './AdminLogin.css';
+const API_URL = process.env.REACT_APP_API || "https://parsa-trade-server.onrender.com";
+
+
 
 function AdminLogin({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API}/admin/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
+
       if (res.ok) {
         onLogin(data.token); // ارسال توکن به بالا
       } else {
-        setError(data.message || "ورود ناموفق");
+        setError(data.message || 'ورود ناموفق');
       }
     } catch (err) {
-      setError("خطا در ارتباط با سرور");
+      setError('خطا در ارتباط با سرور');
     }
   };
 
