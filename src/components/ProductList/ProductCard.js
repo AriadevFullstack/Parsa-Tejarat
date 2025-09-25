@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProductList.css'; // چون کلاس‌ها تو همین فایل CSS هستن
+import './ProductList.Module.css'; // چون کلاس‌ها تو همین فایل CSS هستن
 
 const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
 

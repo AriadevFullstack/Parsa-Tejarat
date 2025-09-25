@@ -1,5 +1,5 @@
 import React from 'react';
-import './CategoryMenu.css';
+import './CategoryMenu.Module.css';
 
 function CategoryMenu({ categories, selected, onSelect }) {
   return (

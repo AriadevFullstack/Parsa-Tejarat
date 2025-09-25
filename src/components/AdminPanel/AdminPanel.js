@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdminProductList from './AdminProductList';
 import AddProductForm from './AddProductForm';
-import './AdminPanel.css';
+import './AdminPanel.Module.css';
 
 const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
 

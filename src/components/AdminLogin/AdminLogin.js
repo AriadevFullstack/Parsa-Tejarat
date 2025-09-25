@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminLogin.css';
+import './AdminLogin.Module.css';
 
 const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
 
