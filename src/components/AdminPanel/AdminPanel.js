@@ -2,54 +2,74 @@ import React, { useEffect, useState } from 'react';
 import AdminProductList from './AdminProductList';
 import AddProductForm from './AddProductForm';
 import './AdminPanel.css';
-const API = process.env.REACT_APP_API;
 
+const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
 
 function AdminPanel({ token }) {
   const [products, setProducts] = useState([]);
-  const [editingProduct, setEditingProduct] = useState(null); // ← برای ویرایش
+  const [editingProduct, setEditingProduct] = useState(null);
 
+  // دریافت محصولات
   const fetchProducts = async () => {
-    const res = await fetch('http://localhost:5000/products');
-    const data = await res.json();
-    setProducts(data);
+    try {
+      const res = await fetch(`${API}/products`);
+      const data = await res.json();
+      setProducts(data);
+    } catch (err) {
+      console.error('Error fetching products:', err);
+    }
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  // حذف محصول
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/products/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchProducts();
+    try {
+      await fetch(`${API}/products/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchProducts();
+    } catch (err) {
+      console.error('Error deleting product:', err);
+    }
   };
 
+  // اضافه کردن محصول
   const handleAdd = async (productData) => {
-    await fetch('http://localhost:5000/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(productData),
-    });
-    fetchProducts();
+    try {
+      await fetch(`${API}/products`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(productData),
+      });
+      fetchProducts();
+    } catch (err) {
+      console.error('Error adding product:', err);
+    }
   };
 
+  // بروزرسانی محصول
   const handleUpdate = async (productData) => {
-    await fetch(`http://localhost:5000/products/${productData.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(productData),
-    });
-    setEditingProduct(null);
-    fetchProducts();
+    try {
+      await fetch(`${API}/products/${productData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(productData),
+      });
+      setEditingProduct(null);
+      fetchProducts();
+    } catch (err) {
+      console.error('Error updating product:', err);
+    }
   };
 
   return (

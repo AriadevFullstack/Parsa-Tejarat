@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './AdminLogin.css';
 
+const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
+
 function AdminLogin({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,7 +12,7 @@ function AdminLogin({ onLogin }) {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/auth/login', {
+      const res = await fetch(`${API}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

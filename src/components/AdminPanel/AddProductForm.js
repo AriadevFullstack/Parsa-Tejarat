@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-const API = process.env.REACT_APP_API;
 
+const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
 
 function AddProductForm({ onAdd, onUpdate, editingProduct }) {
   const [form, setForm] = useState({
@@ -35,10 +35,11 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
       const data = new FormData();
       data.append('image', file);
 
-      const res = await fetch('http://localhost:5000/upload', {
+      const res = await fetch(`${API}/upload`, { // ← تغییر آدرس
         method: 'POST',
         body: data,
       });
+
       const imgRes = await res.json();
       imageUrl = imgRes.imageUrl;
     }
@@ -58,10 +59,38 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
   return (
     <form onSubmit={handleSubmit} className="add-form">
       <h3>{editingProduct ? 'ویرایش محصول' : 'افزودن محصول جدید'}</h3>
-      <input name="name" type="text" placeholder="نام" value={form.name} onChange={handleChange} required />
-      <input name="description" type="text" placeholder="توضیحات" value={form.description} onChange={handleChange} required />
-      <input name="price" type="number" placeholder="قیمت" value={form.price} onChange={handleChange} required />
-      <input name="category" type="text" placeholder="دسته‌بندی" value={form.category} onChange={handleChange} required />
+      <input
+        name="name"
+        type="text"
+        placeholder="نام"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="description"
+        type="text"
+        placeholder="توضیحات"
+        value={form.description}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="price"
+        type="number"
+        placeholder="قیمت"
+        value={form.price}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="category"
+        type="text"
+        placeholder="دسته‌بندی"
+        value={form.category}
+        onChange={handleChange}
+        required
+      />
       <input type="file" onChange={handleFileChange} />
       <button type="submit">{editingProduct ? 'ذخیره تغییرات' : 'افزودن'}</button>
     </form>
