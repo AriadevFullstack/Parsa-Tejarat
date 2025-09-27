@@ -1,32 +1,44 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center; /* ابتدا لوگو وسط قرار گیرد */
+  justify-content: space-between; /* دکمه سمت چپ، لوگو سمت راست */
   padding: 12px 20px;
-  background-color: #6a0dad; /* بنفش */
+  background-color: #6a0dad;
   font-family: 'Tahoma', sans-serif;
-  position: relative; /* برای موقعیت دکمه سمت چپ */
   color: white;
+  flex-wrap: wrap; /* برای ریسپانسیو */
 }
 
 .logo {
   font-weight: bold;
-  font-size: 32px; /* بزرگتر */
-  text-align: center;
+  font-size: 32px; /* بزرگ */
+  text-align: right;
+  order: 2; /* لوگو سمت راست */
 }
 
 .admin-btn {
-  position: absolute; /* دکمه را سمت چپ قرار می‌دهد */
-  left: 20px;
   padding: 6px 12px;
-  background-color: #4b0082; /* بنفش تیره‌تر برای دکمه */
+  background-color: #4b0082;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 6px;
   font-size: 14px;
+  order: 1; /* دکمه سمت چپ */
 }
 
-.admin-btn:hover {
-  background-color: #5e00b3; /* تغییر رنگ هنگام هاور */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between; /* حفظ ترتیب در موبایل */
+  }
+
+  .logo {
+    font-size: 24px; /* لوگو کمی کوچکتر در موبایل */
+  }
+
+  .admin-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
 }

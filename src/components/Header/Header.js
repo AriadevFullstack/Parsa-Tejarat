@@ -10,7 +10,7 @@ function Header() {
       <button className="admin-btn" onClick={() => navigate('/admin')}>
         ورود به ادمین
       </button>
-      <div className="logo">پرسا تجارت</div>
+      <div className="logo">پرسا تجارت پدیدار</div>
     </header>
   );
 }
