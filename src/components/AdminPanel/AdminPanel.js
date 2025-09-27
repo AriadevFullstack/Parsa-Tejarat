@@ -3,7 +3,7 @@ import AdminProductList from './AdminProductList';
 import AddProductForm from './AddProductForm';
 import './AdminPanel.Module.css';
 
-const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
+const API = process.env.REACT_APP_API;
 
 function AdminPanel({ token }) {
   const [products, setProducts] = useState([]);
@@ -31,7 +31,7 @@ function AdminPanel({ token }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
-      fetchProducts();
+      await fetchProducts(); // حتما await اضافه کنید
     } catch (err) {
       console.error('Error deleting product:', err);
     }
@@ -48,7 +48,7 @@ function AdminPanel({ token }) {
         },
         body: JSON.stringify(productData),
       });
-      fetchProducts();
+      await fetchProducts(); // بلافاصله لیست بروزرسانی شود
     } catch (err) {
       console.error('Error adding product:', err);
     }
@@ -56,6 +56,7 @@ function AdminPanel({ token }) {
 
   // بروزرسانی محصول
   const handleUpdate = async (productData) => {
+    console.log("🛠 Updating product:", productData);
     try {
       await fetch(`${API}/products/${productData.id}`, {
         method: 'PUT',
@@ -66,7 +67,7 @@ function AdminPanel({ token }) {
         body: JSON.stringify(productData),
       });
       setEditingProduct(null);
-      fetchProducts();
+      await fetchProducts(); // لیست بلافاصله بروزرسانی شود
     } catch (err) {
       console.error('Error updating product:', err);
     }

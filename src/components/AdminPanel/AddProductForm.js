@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-const API = process.env.REACT_APP_API; // ← استفاده از متغیر محیطی
+const API = process.env.REACT_APP_API;
 
 function AddProductForm({ onAdd, onUpdate, editingProduct }) {
   const [form, setForm] = useState({
+    id: '',
     name: '',
     description: '',
     price: '',
@@ -12,9 +13,12 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
   });
   const [file, setFile] = useState(null);
 
+  // وقتی محصولی برای ویرایش انتخاب شد، فرم پر شود
   useEffect(() => {
     if (editingProduct) {
-      setForm(editingProduct);
+      setForm({ ...editingProduct });
+    } else {
+      setForm({ id: '', name: '', description: '', price: '', category: '', image: '' });
     }
   }, [editingProduct]);
 
@@ -28,14 +32,15 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     let imageUrl = form.image;
 
-    // اگر فایل جدید انتخاب شده
+    // آپلود فایل جدید اگر انتخاب شده
     if (file) {
       const data = new FormData();
       data.append('image', file);
 
-      const res = await fetch(`${API}/upload`, { // ← تغییر آدرس
+      const res = await fetch(`${API}/upload`, {
         method: 'POST',
         body: data,
       });
@@ -50,9 +55,16 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
       image: imageUrl,
     };
 
-    editingProduct ? onUpdate(productData) : onAdd(productData);
+    console.log("💾 Submitting productData:", productData);
 
-    setForm({ name: '', description: '', price: '', category: '', image: '' });
+    if (editingProduct) {
+      productData.id = editingProduct.id; // id را حتما اضافه کنید
+      await onUpdate(productData);
+    } else {
+      await onAdd(productData);
+    }
+
+    setForm({ id: '', name: '', description: '', price: '', category: '', image: '' });
     setFile(null);
   };
 
