@@ -71,8 +71,16 @@ function AdminPanel({ token }) {
   return (
     <div className="admin-panel">
       <h2>پنل مدیریت محصولات</h2>
-      <AddProductForm onAdd={handleAdd} onUpdate={handleUpdate} editingProduct={editingProduct} />
-      <AdminProductList products={products} onDelete={handleDelete} onEdit={setEditingProduct} />
+      <AddProductForm
+        onAdd={handleAdd}
+        onUpdate={handleUpdate}
+        editingProduct={editingProduct}
+      />
+      <AdminProductList
+        products={products}
+        onDelete={handleDelete}
+        onEdit={setEditingProduct}
+      />
     </div>
   );
 }

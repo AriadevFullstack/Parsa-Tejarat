@@ -4,13 +4,16 @@ import './ProductList.Module.css';
 
 function ProductList({ products }) {
   return (
-    <div className="product-list">
+    <div className="products-page">
+      <h2>محصولات ما</h2>
       {products.length === 0 ? (
         <p>محصولی برای نمایش وجود ندارد.</p>
       ) : (
-        products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))
+        <div className="product-list">
+          {products.map(product => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
       )}
     </div>
   );

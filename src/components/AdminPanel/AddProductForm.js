@@ -15,7 +15,7 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
 
   useEffect(() => {
     if (editingProduct) {
-      setForm({ ...editingProduct }); // شامل _id
+      setForm({ ...editingProduct });
     } else {
       setForm({ _id: '', name: '', description: '', price: '', category: '', image: '' });
     }
@@ -37,7 +37,6 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
     if (file) {
       const data = new FormData();
       data.append('image', file);
-
       const res = await fetch(`${API}/upload`, { method: 'POST', body: data });
       const imgRes = await res.json();
       imageUrl = imgRes.imageUrl;
@@ -49,10 +48,12 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
       image: imageUrl,
     };
 
-    if (editingProduct) {
-      productData._id = editingProduct._id; // حتما _id داشته باشد
+    if (form._id) {
+      // حالت ویرایش
       await onUpdate(productData);
     } else {
+      // حالت افزودن محصول جدید
+      delete productData._id;
       await onAdd(productData);
     }
 
@@ -62,13 +63,13 @@ function AddProductForm({ onAdd, onUpdate, editingProduct }) {
 
   return (
     <form onSubmit={handleSubmit} className="add-form">
-      <h3>{editingProduct ? 'ویرایش محصول' : 'افزودن محصول جدید'}</h3>
+      <h3>{form._id ? 'ویرایش محصول' : 'افزودن محصول جدید'}</h3>
       <input name="name" type="text" placeholder="نام" value={form.name} onChange={handleChange} required />
       <input name="description" type="text" placeholder="توضیحات" value={form.description} onChange={handleChange} required />
       <input name="price" type="number" placeholder="قیمت" value={form.price} onChange={handleChange} required />
       <input name="category" type="text" placeholder="دسته‌بندی" value={form.category} onChange={handleChange} required />
       <input type="file" onChange={handleFileChange} />
-      <button type="submit">{editingProduct ? 'ذخیره تغییرات' : 'افزودن'}</button>
+      <button type="submit">{form._id ? 'ذخیره تغییرات' : 'افزودن'}</button>
     </form>
   );
 }

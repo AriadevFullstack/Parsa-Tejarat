@@ -1,21 +1,32 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center; /* ابتدا لوگو وسط قرار گیرد */
   padding: 12px 20px;
-  background-color: #f5f5f5;
+  background-color: #6a0dad; /* بنفش */
   font-family: 'Tahoma', sans-serif;
+  position: relative; /* برای موقعیت دکمه سمت چپ */
+  color: white;
 }
 
 .logo {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 32px; /* بزرگتر */
+  text-align: center;
 }
 
 .admin-btn {
+  position: absolute; /* دکمه را سمت چپ قرار می‌دهد */
+  left: 20px;
   padding: 6px 12px;
-  background-color: #0077cc;
+  background-color: #4b0082; /* بنفش تیره‌تر برای دکمه */
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 6px;
+  font-size: 14px;
+}
+
+.admin-btn:hover {
+  background-color: #5e00b3; /* تغییر رنگ هنگام هاور */
 }

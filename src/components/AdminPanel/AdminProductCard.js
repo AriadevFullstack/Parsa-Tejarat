@@ -12,7 +12,6 @@ function AdminProductCard({ product, onDelete, onEdit }) {
           style={{ width: '100%', height: 'auto', marginBottom: 10 }}
         />
       )}
-
       <h4>{product.name}</h4>
       <p>{product.description}</p>
       <p>قیمت: {product.price} تومان</p>
@@ -23,7 +22,7 @@ function AdminProductCard({ product, onDelete, onEdit }) {
         <button
           onClick={() => {
             if (window.confirm("آیا مطمئن هستید می‌خواهید این محصول را حذف کنید؟")) {
-              onDelete(product._id); 
+              onDelete(product._id);
             }
           }}
         >
