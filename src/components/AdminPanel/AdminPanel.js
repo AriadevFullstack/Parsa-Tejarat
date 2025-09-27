@@ -9,7 +9,6 @@ function AdminPanel({ token }) {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
 
-  // دریافت محصولات
   const fetchProducts = async () => {
     try {
       const res = await fetch(`${API}/products`);
@@ -24,20 +23,18 @@ function AdminPanel({ token }) {
     fetchProducts();
   }, []);
 
-  // حذف محصول
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     try {
-      await fetch(`${API}/products/${id}`, {
+      await fetch(`${API}/products/${_id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
-      await fetchProducts(); // حتما await اضافه کنید
+      await fetchProducts();
     } catch (err) {
       console.error('Error deleting product:', err);
     }
   };
 
-  // اضافه کردن محصول
   const handleAdd = async (productData) => {
     try {
       await fetch(`${API}/products`, {
@@ -48,17 +45,15 @@ function AdminPanel({ token }) {
         },
         body: JSON.stringify(productData),
       });
-      await fetchProducts(); // بلافاصله لیست بروزرسانی شود
+      await fetchProducts();
     } catch (err) {
       console.error('Error adding product:', err);
     }
   };
 
-  // بروزرسانی محصول
   const handleUpdate = async (productData) => {
-    console.log("🛠 Updating product:", productData);
     try {
-      await fetch(`${API}/products/${productData.id}`, {
+      await fetch(`${API}/products/${productData._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +62,7 @@ function AdminPanel({ token }) {
         body: JSON.stringify(productData),
       });
       setEditingProduct(null);
-      await fetchProducts(); // لیست بلافاصله بروزرسانی شود
+      await fetchProducts();
     } catch (err) {
       console.error('Error updating product:', err);
     }
@@ -76,18 +71,8 @@ function AdminPanel({ token }) {
   return (
     <div className="admin-panel">
       <h2>پنل مدیریت محصولات</h2>
-
-      <AddProductForm
-        onAdd={handleAdd}
-        onUpdate={handleUpdate}
-        editingProduct={editingProduct}
-      />
-
-      <AdminProductList
-        products={products}
-        onDelete={handleDelete}
-        onEdit={setEditingProduct}
-      />
+      <AddProductForm onAdd={handleAdd} onUpdate={handleUpdate} editingProduct={editingProduct} />
+      <AdminProductList products={products} onDelete={handleDelete} onEdit={setEditingProduct} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ function AdminProductList({ products, onDelete, onEdit }) {
     <div className="admin-product-list">
       {products.map((product) => (
         <AdminProductCard
-          key={product.id}
+          key={product._id}  
           product={product}
           onDelete={onDelete}
           onEdit={onEdit}
